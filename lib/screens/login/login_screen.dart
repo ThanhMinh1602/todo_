@@ -5,8 +5,7 @@ import 'package:todo_app/components/text_field/td_text_field.dart';
 import 'package:todo_app/components/text_field/td_text_field_password.dart';
 import 'package:todo_app/constants/app_color.dart';
 import 'package:todo_app/gen/assets.gen.dart';
-import 'package:todo_app/screens/bloc/login/auth_bloc.dart';
-import 'package:todo_app/service/navigation_service.dart';
+import 'package:todo_app/screens/login/login/auth_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
