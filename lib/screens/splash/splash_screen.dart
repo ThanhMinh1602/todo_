@@ -14,19 +14,22 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    final SplashBloc splashBloc = SplashBloc(context);
-    splashBloc.add(MoveToLoginScreen());
-
     return BlocProvider(
       create: (context) => SplashBloc(context),
-      child: Scaffold(
-        backgroundColor: AppColor.backgroundColor,
-        body: Center(
-          child: Image.asset(
-            Assets.icons.todoLogo.path,
-            width: 200,
-          ),
-        ),
+      child: BlocBuilder<SplashBloc, SplashState>(
+        builder: (context, state) {
+          final splashBloc = BlocProvider.of<SplashBloc>(context);
+          splashBloc.add(MoveToLoginScreen());
+          return Scaffold(
+            backgroundColor: AppColor.backgroundColor,
+            body: Center(
+              child: Image.asset(
+                Assets.icons.todoLogo.path,
+                width: 200,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
