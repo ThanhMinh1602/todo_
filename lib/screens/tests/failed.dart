@@ -11,7 +11,7 @@ class _ErrorWitgetState extends State<ErrorWitget> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: const Text('error page')),
+      body: Center(child: Text('error page')),
     );
   }
 }

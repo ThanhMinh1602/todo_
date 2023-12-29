@@ -4,18 +4,21 @@ import 'package:todo_app/screens/splash/bloc/splash_bloc.dart';
 import 'package:todo_app/screens/splash/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SplashBloc splashBloc = SplashBloc();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SplashBloc(context),
-      child: const MaterialApp(
+      create: (context) => splashBloc,
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        home: SplashScreen(
+          splashBloc: splashBloc,
+        ),
       ),
     );
   }
