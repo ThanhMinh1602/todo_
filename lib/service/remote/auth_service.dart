@@ -33,9 +33,16 @@ class AuthServices implements ImplAuthServices {
   }
 
   @override
-  Future<http.Response> login(String email, String password) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<http.Response> login(String email, String password) async {
+    const uri = AppApi.endPointLogin;
+    http.Response response = await httpLog.post(Uri.parse(uri),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${null}',
+        },
+        body: jsonEncode({"email": email, "password": password}));
+    return response;
   }
 
   @override

@@ -20,56 +20,61 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> loginPressed(event, emit) async {
     if (event is LoginPressed) {
-      final email = event.email;
-      final password = event.password;
-      if (email == 'ntminh16201@gmail.com' && password == '123456') {
-        emit(LoginSuccess());
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ));
-      } else {
-        emit(
-          const LoginFailure(error: 'Đăng nhập thất bại'),
-        );
-      }
-    } else if (event is LogoutRequested) {
-      emit(LoggedOut());
-    }
-  }
-
-  Future<void> sendOtp(event, emit) async {
-    if (event is SendOtpPressed) {
-      final email = event.email;
-      authService.sendOTP(email).then((response) {
+      try {
+        final email = event.email;
+        final password = event.password;
+        final response = await authService.login(email, password);
         final data = jsonDecode(response.body);
         if (data['status_code'] == 200) {
           print('object code ${data['body']['code']}');
         } else {
           print('object code ${data['message']}');
         }
-      });
+      } catch (e) {
+        print('Login failed with error: $e');
+      }
+    }
+    emit(LoginSuccess());
+  }
+
+  Future<void> sendOtp(event, emit) async {
+    if (event is SendOtpPressed) {
+      try {
+        final email = event.email;
+        final response = await authService.sendOTP(email);
+        final data = jsonDecode(response.body);
+        if (data['status_code'] == 200) {
+          print('object code ${data['body']['code']}');
+        } else {
+          print('object code ${data['message']}');
+        }
+      } catch (e) {
+        print('OtpOtp failed with error: $e');
+      }
     }
     emit(OtpSuccess());
   }
 
   Future<void> register(event, emit) async {
     if (event is RegisterPressed) {
-      final name = event.name;
-      final email = event.email;
-      final password = event.password;
-      final age = event.age;
-      final code = event.code;
-      final response = await authService.register(name, email, password, age, code);
+      try {
+        final name = event.name;
+        final email = event.email;
+        final password = event.password;
+        final age = event.age;
+        final code = event.code;
+        final response =
+            await authService.register(name, email, password, age, code);
         final data = jsonDecode(response.body);
-        if (data['status_code'] == 200) {
-          print('object code ${data['body']['code']}');
-        } else {
-          print('object code ${data['message']}');
-        }
+        print('object code ${data['body']['code']}');
+        emit(RegisterSuccess());
+      } catch (e) {
+        print('Registration failed with error: $e');
+      }
     }
-    emit(RegisterSuccess());
   }
-  Future<void> login() async {
+
+  Future<void> login(event, emit) async {
     emit(LoginSuccess());
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const HomeScreen(),

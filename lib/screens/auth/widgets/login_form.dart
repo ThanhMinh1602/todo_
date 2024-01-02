@@ -39,8 +39,18 @@ class LoginForm extends StatelessWidget {
               const SizedBox(height: 20.0),
               _buildPasswordField(_passwordController),
               const SizedBox(height: 30.0),
-              _buildLoginButton(
-                  authBloc, _emailController, _passwordController),
+              TdElevatedButton(
+                borderColor: AppColor.primaryColor,
+                color: AppColor.primaryColor,
+                text: 'Login'.toUpperCase(),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    authBloc.add(LoginPressed(
+                        email: _emailController.text,
+                        password: _passwordController.text));
+                  }
+                },
+              ),
               const SizedBox(height: 20.0),
               TdElevatedButton.outline(
                 text: 'Register'.toUpperCase(),
@@ -71,23 +81,5 @@ Widget _buildPasswordField(TextEditingController controller) {
   return TdTextFieldPassword(
     controller: controller,
     hintText: 'Password',
-  );
-}
-
-Widget _buildLoginButton(
-  AuthBloc authBloc,
-  TextEditingController emailController,
-  TextEditingController passwordController,
-) {
-  return TdElevatedButton(
-    text: 'Login'.toUpperCase(),
-    color: AppColor.primaryColor,
-    borderColor: AppColor.primaryColor,
-    onPressed: () {
-      authBloc.add(LoginPressed(
-        email: emailController.text,
-        password: passwordController.text,
-      ));
-    },
   );
 }
