@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/constants/app_color.dart';
 import 'package:todo_app/gen/assets.gen.dart';
-import 'package:todo_app/screens/login/login_screen.dart';
+import 'package:todo_app/screens/auth/login_screen.dart';
 import 'package:todo_app/screens/splash/bloc/splash_bloc.dart';
 
 class SplashScreen extends StatelessWidget {

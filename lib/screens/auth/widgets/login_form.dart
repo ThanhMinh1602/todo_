@@ -5,7 +5,8 @@ import 'package:todo_app/components/text_field/td_text_field.dart';
 import 'package:todo_app/components/text_field/td_text_field_password.dart';
 import 'package:todo_app/constants/app_color.dart';
 import 'package:todo_app/gen/assets.gen.dart';
-import 'package:todo_app/screens/login/bloc/auth_bloc.dart';
+import 'package:todo_app/screens/auth/bloc/auth_bloc.dart';
+import 'package:todo_app/screens/auth/register_screen.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -15,32 +16,44 @@ class LoginForm extends StatelessWidget {
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
     final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
-
+    final _formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0)
-            .copyWith(top: MediaQuery.of(context).size.height * 0.2),
-        child: Column(
-          children: [
-            Image.asset(
-              Assets.images.loginImage.path,
-              width: 160,
-            ),
-            const SizedBox(height: 50.0),
-            _buildEmailField(_emailController),
-            const SizedBox(height: 20.0),
-            _buildPasswordField(_passwordController),
-            const SizedBox(height: 30.0),
-            _buildLoginButton(authBloc, _emailController, _passwordController),
-            const SizedBox(height: 20.0),
-            const SizedBox(height: 20.0),
-            TdElevatedButton.outline(
-              text: 'Register'.toUpperCase(),
-              borderColor: AppColor.primaryColor,
-              textColor: AppColor.primaryColor,
-              onPressed: () {},
-            ),
-          ],
+        padding: const EdgeInsets.symmetric(horizontal: 30.0).copyWith(
+            top: MediaQuery.of(context).size.height * 0.2,
+            bottom: MediaQuery.of(context).size.height * 0.05),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Text(
+                'Login'.toUpperCase(),
+                style: const TextStyle(fontSize: 25.0),
+              ),
+              Image.asset(
+                Assets.images.loginImage.path,
+                width: 160,
+              ),
+              const SizedBox(height: 50.0),
+              _buildEmailField(_emailController),
+              const SizedBox(height: 20.0),
+              _buildPasswordField(_passwordController),
+              const SizedBox(height: 30.0),
+              _buildLoginButton(
+                  authBloc, _emailController, _passwordController),
+              const SizedBox(height: 20.0),
+              TdElevatedButton.outline(
+                text: 'Register'.toUpperCase(),
+                borderColor: AppColor.primaryColor,
+                textColor: AppColor.primaryColor,
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const RegisterScreen(),
+                  ));
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

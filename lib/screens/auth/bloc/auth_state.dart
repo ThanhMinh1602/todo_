@@ -29,3 +29,30 @@ class LoginError extends AuthState {
 }
 
 class LoggedOut extends AuthState {}
+
+//otp
+class OtpInitial extends AuthState {}
+
+class OtpSuccess extends AuthState {}
+
+class OtpFailure extends AuthState {
+  final String error;
+
+  const OtpFailure({required this.error});
+  @override
+  List<Object> get props => [error];
+}
+
+// register
+//otp
+class RegisterInitial extends AuthState {}
+
+class RegisterSuccess extends AuthState {}
+
+class RegisterFailure extends AuthState {
+  final String error;
+
+  const RegisterFailure({required this.error});
+  @override
+  List<Object> get props => [error];
+}
